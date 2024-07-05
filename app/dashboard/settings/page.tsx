@@ -26,6 +26,7 @@ import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 
 async function getData(userId: string) {
 
+  noStore()
   const data = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -49,7 +50,6 @@ export default async function SettingPage() {
   const data = await getData(user?.id as string)
 
 async function postData(formData:FormData){
-  noStore()
   "use server"
 
   // ?FormData is a part of standard JavaScript and can be used in any web development project, including those built with Next.js.
