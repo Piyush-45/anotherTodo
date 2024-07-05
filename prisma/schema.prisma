@@ -1,0 +1,54 @@
+// Prisma Client Generator Configuration
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Database Configuration for PostgreSQL
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")   // Connection URL for the PostgreSQL database
+  // directUrl = env("DIRECT_URL")     // Direct connection URL for PostgreSQL
+}
+
+// User Model
+model User {
+  id               String        @id @unique                      // Primary key for the User model
+  name             String?                                        // Optional name field
+  email            String        @unique                         // Unique email field
+  stripeCustomerId String?       @unique                         // Optional unique Stripe Customer ID
+  colorScheme      String        @default("theme-green")         // Default value for colorScheme
+  subscription     Subscription?                                 // Optional one-to-one relation with Subscription
+ Notes  Note[]
+  // Notes:
+  // - A user can have one subscription.
+  // - The 'subscription' field is optional, meaning a user may not have a subscription.
+}
+
+// Subscription Model
+model Subscription {
+  stripeSubscriptionId String   @id @unique                      // Primary key for the Subscription model
+  interval             String                                    // Subscription interval (e.g., monthly, yearly)
+  status               String                                    // Subscription status (e.g., active, inactive)
+  currentPeriodStart   Int                                       // Unix timestamp for the start of the current period
+  currentPeriodEnd     Int                                       // Unix timestamp for the end of the current period
+  createdAt            DateTime @default(now())                  // Auto-generated timestamp for when the record is created
+  updatedAt            DateTime @updatedAt                       // Auto-updated timestamp for when the record is updated
+  user                 User     @relation(fields: [userId], references: [id])  // One-to-one relation to User
+  userId               String   @unique                          // Unique foreign key referencing User model
+
+  // Notes:
+  // - A subscription is linked to exactly one user.
+  // - The 'userId' field ensures that each subscription is associated with a unique user.
+  // - The 'updatedAt' field automatically updates to the current timestamp whenever the record is modified.
+}
+
+
+model Note {
+  id          String @id @default(uuid())
+  title       String
+  description String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?   @relation(fields: [userId], references: [id])
+  userId String?
+}
