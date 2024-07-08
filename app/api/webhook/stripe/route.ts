@@ -64,7 +64,7 @@ export async function POST(req: Request) {
 
         },
         data:{
-          createStripeSession:subscription.items.data[0].price.id,
+          // planId:subscription.items.data[0].price.id,
           currentPeriodStart:subscription.current_period_start,
           currentPeriodEnd:subscription.current_period_end,
           status:subscription.status
