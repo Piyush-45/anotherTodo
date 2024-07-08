@@ -19,13 +19,12 @@ export default async function Home() {
                 Sort your notes easily
               </span>
             </span>
-
+ 
             <h1 className="mt-8 text-3xl font-extrabold tracking-tight lg:text-6xl">
               Create Notes with ease
             </h1>
             <p className="max-w-xl mx-auto mt-8 text-base lg:text-xl text-secondary-foreground">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et d
+            A sleek task management solution powered by Next.js and Supabase. Enjoy seamless authentication, switch between dark and light themes, and effortlessly save or delete notes directly to your secure database. Simplify your productivity with style and ease.
             </p>
           </div>
 
